@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```
 Es importante recordar que a lo largo de la vida del proyecto hay que estar guardando las dependencias si se instala algo más.
 
-7. Instalar django, djangorestframework y 
+7. Instalar django, djangorestframework y django-cors-headers
 ```python
 pip install django
 ```
@@ -42,22 +42,58 @@ pip install django
 pip install djangorestframework
 ```
 
+```python
+pip install django-cors-headers
+```
+
 NOTA: Si usas vscode puedes hacer clic a la barra buscadora de hasta arriba y escribir ">python: Select interpret ", la das enter. Después seleccionas el entorno virtual que creaste.
 Esto te ayuda para que cuando abras una nueva terminal no tengas que activar el entorno a cada rato.
 
 # 2 Configuración del proyecto.
-# 2.1) Crear el proyecto
+## 2.1) Crear el proyecto
 ```python
 django-admin startproject crud_api .
 ```
-# 2.2) Arrancar el servidor de django
+## 2.2) Arrancar el servidor de django
 ```python
 py manage.py runserver
 ```
 
-# 2.3) Crear app
+## 2.3) Crear app
 ```python
 py manage.py startapp pass_secure
 ```
-# 2.4) Conectar la app con el proyecto
+## 2.4) Conectar la app con el proyecto
 Se tiene que abrir el archivo de settings.py del proyecto y agregar lo siguiente:
+```python
+INSTALLED_APPS = [
+    ...
+    'corsheaders',
+    'rest_framework',
+    'pass_secure',
+]
+...
+
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders',
+    ...
+
+...
+CORS_ALLOWED_ORIGINS = [
+    # Aqui va el servidor del frontend
+]
+```
+
+# 3) Modelos
+## 3.1) Crear la migraciones
+```python
+py manage.py makemigrations
+```
+## 3.2) Migrar los modelos
+```python
+py manage.py migrate
+```
+
