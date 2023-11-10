@@ -64,7 +64,7 @@ py manage.py runserver
 py manage.py startapp pass_secure
 ```
 ## 2.4) Conectar la app con el proyecto
-Se tiene que abrir el archivo de settings.py del proyecto y agregar lo siguiente:
+Se tiene que abrir el archivo de **settings.py** del proyecto y agregar lo siguiente:
 ```python
 INSTALLED_APPS = [
     ...
@@ -98,7 +98,7 @@ py manage.py migrate
 ```
 
 ## 3.3) Crear las tablas
-Hay que recordar que en la aplicación que se hizo hay un archivo models.py en donde se ingresa el código para crear las tablas, en mi caso fue el siguiente:
+Hay que recordar que en la aplicación que se hizo hay un archivo **models.py** en donde se ingresa el código para crear las tablas, en mi caso fue el siguiente:
 ```python
 from django.db import models
 
@@ -118,7 +118,7 @@ py manage.py createsuperuser
 Después te solicita unos datos, hay que ingresarlos.
 
 Ahora sincronicemos la tabla creada con el panel de administración.
-En el archivo admin.py de la app de ingresa lo siguiente:
+En el archivo **admin.py** de la app de ingresa lo siguiente:
 ```python
 from django.contrib import admin
 #Modelo Task
@@ -141,7 +141,7 @@ En el archivo models.py del modelo agregar lo siguiente:
 
 # 5. API
 Para crear las vistas del CRUD es necesario hacer lo siguiente:
-En la app crear el archivo serializer.py que contenga lo siguiente:
+En la app crear el archivo **serializer.p**y que contenga lo siguiente:
 ```python
 from rest_framework import serializers
 from .models import Task
@@ -154,7 +154,7 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 ```
 
-En el archivo views.py agregar lo siguiente:
+En el archivo **views.py** agregar lo siguiente:
 ```python
 from rest_framework import viewsets
 from .serializer import TaskSerializer
@@ -165,3 +165,28 @@ class TaskView(viewsets.ModelViewSet):
     queryset = Task.objects.all()
 ```
 Lo anterior es para que pueda hacer toda la operación del crud.
+
+Para crear las rutas hay que crear el archivo **urls.py** en la app y poner lo siguiente:
+```python
+from django.urls import path, include
+from rest_framework import routers
+from tasks import views
+
+router = routers.DefaultRouter()
+router.register(r'task', views.TaskView, 'tasks')
+
+#api versioning
+urlpatterns = [
+    path("api/v1", include(router.urls))
+]
+```
+Después en el archivo de urls.py del proyeto se pone lo siguiente:
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('tasks/', include('tasks.urls') ),
+]
+```
