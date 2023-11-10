@@ -97,3 +97,15 @@ py manage.py makemigrations
 py manage.py migrate
 ```
 
+## 3.3) Crear las tablas
+Hay que recordar que en la aplicación que se hizo hay un archivo models.py en donde se ingresa el código para crear las tablas, en mi caso fue el siguiente:
+```python
+from django.db import models
+
+class Task(models.Model):
+    title: models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    done = models.BooleanField(default=False)
+
+```
+Después se usa el comando para crear las migraciones y después se migran los modelos.
