@@ -190,3 +190,45 @@ urlpatterns = [
     path('tasks/', include('tasks.urls') ),
 ]
 ```
+# 6. Documentar
+La parte más tediosa es el documentar el proyecto desde el backend y el frontend, para el desarrollo de la API hay un modulo que permite documentar la API el cual se instala de la siguiente forma:
+```python
+pip install coreapi
+```
+
+Después se va al archivo de **settings.py** del proyecto para agregar lo siguiente:
+```python
+...
+INSTALLED_APPS = [
+  ...
+    "corsheaders",
+    'coreapi',
+    'rest_framework',
+  ...
+  
+CORS_ALLOWED_ORIGINS = []
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
+```
+
+Después en el archivo de urls.py de la app se agrega lo siguiente:
+```python
+...
+from rest_framework.documentation import include_docs_urls
+...
+urlpatterns = [
+    path("api/v1/", include(router.urls)),
+    path("docs/", include_docs_urls(title="Task-API")),
+]
+```
+
+Nota: En caso que no te funcione el servidore puedes hacer lo siguiente:
+Ejecutar lo siguiente:
+```python
+py -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install --upgrade setuptools
+pip uninstall coreapi
+pip install coreapi
+```

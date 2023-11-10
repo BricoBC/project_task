@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pass_secure',
-    "corsheaders",
+    'corsheaders',
+    'coreapi',
     'rest_framework',
     'tasks',
 ]
@@ -128,6 +129,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Aquí van los servidores que se permite conectar
-CORS_ALLOWED_ORIGINS = [
-    
-]
+CORS_ALLOWED_ORIGINS = []
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
