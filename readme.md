@@ -103,9 +103,38 @@ Hay que recordar que en la aplicación que se hizo hay un archivo models.py en d
 from django.db import models
 
 class Task(models.Model):
-    title: models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     done = models.BooleanField(default=False)
 
 ```
 Después se usa el comando para crear las migraciones y después se migran los modelos.
+
+# 4. Panel de administrador
+Existe una ruta exclusiva para el panel de administrador, para ello hay que crear un usario administrador y eso se hace con el siguiente comando:
+```python
+py manage.py createsuperuser
+```
+Después te solicita unos datos, hay que ingresarlos.
+
+Ahora sincronicemos la tabla creada con el panel de administración.
+En el archivo admin.py de la app de ingresa lo siguiente:
+```python
+from django.contrib import admin
+#Modelo Task
+from .models import Task
+
+admin.site.register(Task)
+```
+
+Después se ejecuta el servidor de django y se pone al final de la ruta /admin/, se ingresa los datos de login y accedes al panel de administrador.
+
+Nota: Si no te gusta como se ve cuando ya se tiene registrado un dato en la tabla se puede modificar de la siguiente forma:
+En el archivo models.py del modelo agregar lo siguiente:
+```python
+    ...
+    done = models.BooleanField(default=False)
+
+    def __str__(self) -> str:        
+        return self.title
+```
