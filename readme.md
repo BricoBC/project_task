@@ -1,8 +1,8 @@
-# INTRODUCCIÓN
+## INTRODUCCIÓN
 Este proyecto está basado con conocimientos básicos que se exponen en el repositorio de _**project-django**_ , **crud-auth** y **drt-crud**.
 Se va a mencionar conceptos que fueron mencionados en ese repositorio y se va a ir complementando con respecto para hacer un REST API y su comunicación que tenga con el frontend.
 
-# 1. Buenas prácticas
+## 1. Buenas prácticas
 Recordar que las buenas prácticas consiste en:
 1. Crear carpeta del proyecto.
 ```bash
@@ -49,21 +49,22 @@ pip install django-cors-headers
 NOTA: Si usas vscode puedes hacer clic a la barra buscadora de hasta arriba y escribir ">python: Select interpret ", la das enter. Después seleccionas el entorno virtual que creaste.
 Esto te ayuda para que cuando abras una nueva terminal no tengas que activar el entorno a cada rato.
 
-# 2 Configuración del proyecto.
-## 2.1) Crear el proyecto
+# BACKEND
+## 2 Configuración del proyecto.
+### 2.1) Crear el proyecto
 ```python
 django-admin startproject crud_api .
 ```
-## 2.2) Arrancar el servidor de django
+### 2.2) Arrancar el servidor de django
 ```python
 py manage.py runserver
 ```
 
-## 2.3) Crear app
+### 2.3) Crear app
 ```python
 py manage.py startapp pass_secure
 ```
-## 2.4) Conectar la app con el proyecto
+### 2.4) Conectar la app con el proyecto
 Se tiene que abrir el archivo de **settings.py** del proyecto y agregar lo siguiente:
 ```python
 INSTALLED_APPS = [
@@ -83,21 +84,21 @@ MIDDLEWARE = [
 
 ...
 CORS_ALLOWED_ORIGINS = [
-    # Aqui va el servidor del frontend
+    ## Aqui va el servidor del frontend
 ]
 ```
 
-# 3) Modelos
-## 3.1) Crear la migraciones
+## 3) Modelos
+### 3.1) Crear la migraciones
 ```python
 py manage.py makemigrations
 ```
-## 3.2) Migrar los modelos
+### 3.2) Migrar los modelos
 ```python
 py manage.py migrate
 ```
 
-## 3.3) Crear las tablas
+### 3.3) Crear las tablas
 Hay que recordar que en la aplicación que se hizo hay un archivo **models.py** en donde se ingresa el código para crear las tablas, en mi caso fue el siguiente:
 ```python
 from django.db import models
@@ -110,7 +111,7 @@ class Task(models.Model):
 ```
 Después se usa el comando para crear las migraciones y después se migran los modelos.
 
-# 4. Panel de administrador
+## 4. Panel de administrador
 Existe una ruta exclusiva para el panel de administrador, para ello hay que crear un usario administrador y eso se hace con el siguiente comando:
 ```python
 py manage.py createsuperuser
@@ -139,7 +140,7 @@ En el archivo models.py del modelo agregar lo siguiente:
         return self.title
 ```
 
-# 5. API
+## 5. API
 Para crear las vistas del CRUD es necesario hacer lo siguiente:
 En la app crear el archivo **serializer.p**y que contenga lo siguiente:
 ```python
@@ -150,7 +151,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         #Se indica cuales campos se quiere mandar al front.
-        # fields = ('id', 'title', 'description', 'done')
+        ## fields = ('id', 'title', 'description', 'done')
         fields = '__all__'
 ```
 
@@ -190,7 +191,7 @@ urlpatterns = [
     path('tasks/', include('tasks.urls') ),
 ]
 ```
-# 6. Documentar
+## 6. Documentar
 La parte más tediosa es el documentar el proyecto desde el backend y el frontend, para el desarrollo de la API hay un modulo que permite documentar la API el cual se instala de la siguiente forma:
 ```python
 pip install coreapi
