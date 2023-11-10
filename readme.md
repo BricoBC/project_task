@@ -138,3 +138,30 @@ En el archivo models.py del modelo agregar lo siguiente:
     def __str__(self) -> str:        
         return self.title
 ```
+
+# 5. API
+Para crear las vistas del CRUD es necesario hacer lo siguiente:
+En la app crear el archivo serializer.py que contenga lo siguiente:
+```python
+from rest_framework import serializers
+from .models import Task
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        #Se indica cuales campos se quiere mandar al front.
+        # fields = ('id', 'title', 'description', 'done')
+        fields = '__all__'
+```
+
+En el archivo views.py agregar lo siguiente:
+```python
+from rest_framework import viewsets
+from .serializer import TaskSerializer
+from .models import Task
+
+class TaskView(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    queryset = Task.objects.all()
+```
+Lo anterior es para que pueda hacer toda la operación del crud.
