@@ -246,6 +246,7 @@ Para instalar quasar es con el siguiente comando:
 ```python
 npm install -g @quasar/cli
 ```
+NOTA: EL SIGUIENTE COMANDO LO EJECUTE EN LA MISMA CARPETA EN DONDE HICE EL PROYECTO DEL BACKEND.
 
 Para empezar un nuevo proyecto es con el comando de 
 ```python
@@ -268,7 +269,91 @@ Va a solicitar la siguiente información:
 | `√ Pick an ESLint preset:` | `Prettier` | 
 | `√ Install project dependencies?` | `Yes, use npm` | 
 
-Ya lo único que queda es acceder a la carpeta que se crea y ejecutar el servidor de Quasar:
+Ya lo único que queda es acceder a la carpeta que se crea y ejecutar el servidor de Quasar con el siguiente comando:
 ```js
 quasar dev
+```
+
+## 1. Agregar una tabla al inicio
+Hay que acceder a la carpeta del proyecto de Quasar, después al de 'src' y después al de pages.
+Hay que recordar que se trabaja en secciones con Quasar, por el momento el archivo de IndexPage.vue tiene el **template** y el **script**
+
+En el de template hay que poner lo siguiente:
+```js
+<template>
+  <q-page class="flex flex-center">
+    <div class="q-pa-md">
+    <q-table
+      flat bordered
+      title="Django-API"
+      :rows="rows"
+      :columns="columns"
+      row-key="name"
+      :separator="separator"
+    />
+  </div>
+  </q-page>
+</template>
+```
+
+En el de script hay que poner lo siguiente:
+```js
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'IndexPage',
+  data(){
+    return {
+      columns:[
+        {
+          name: 'titulo', //La vinculación a ese campo
+          label: 'Titulo', // Lo que se ve en la tabla
+          align: 'left', //La forma de cómo se alinea
+          field: 'title', //El campo del backend
+          sortable: true
+        },
+        {
+          name: 'description',
+          label: 'Descripción',
+          align: 'left',
+          field: 'description',
+          sortable: true
+        },
+        {
+          name: 'done',
+          label: 'Hecho',
+          align: 'left',
+          field: 'done',
+          sortable: true
+        }, 
+      ],
+      rows: [],  
+    }
+  },
+  mounted(){
+    this.getRows()
+  },
+  methods:{
+    getRows(){
+        this.$axios
+        .get('http://127.0.0.1:8000/tasks/api/v1/task/')
+        .then(res =>{ this.rows = res.data })
+        .catch( e=>{ console.log(e)})
+    }
+  },
+})
+</script>
+```
+
+Ahora tenemos que ver el puerto que se ejecuta el servidor de Quasar, en mi caso es el 9000 asi que lo voy a indicar en la configuración del proyecto de django.
+```python
+...
+# Aquí van los servidores que se permite conectar
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:9000'
+]
+
+REST_FRAMEWORK = {
+...
 ```
