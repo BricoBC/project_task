@@ -49,7 +49,7 @@ pip install django-cors-headers
 NOTA: Si usas vscode puedes hacer clic a la barra buscadora de hasta arriba y escribir ">python: Select interpret ", la das enter. Después seleccionas el entorno virtual que creaste.
 Esto te ayuda para que cuando abras una nueva terminal no tengas que activar el entorno a cada rato.
 
-# BACKEND
+# BACKEND (DJANGO)
 ## 2 Configuración del proyecto.
 ### 2.1) Crear el proyecto
 ```python
@@ -232,4 +232,43 @@ pip install -r requirements.txt
 pip install --upgrade setuptools
 pip uninstall coreapi
 pip install coreapi
+```
+
+# FRONTEND (QUASAR)
+
+Descargar e instalar [node.JS](https://nodejs.org/en) 
+Se comprueba que ya se tiene instalado con el siguiente comando para que salga la versión:
+```bash
+node -v
+```
+
+Para instalar quasar es con el siguiente comando:
+```python
+npm install -g @quasar/cli
+```
+
+Para empezar un nuevo proyecto es con el comando de 
+```python
+npm init quasar
+```
+Va a solicitar la siguiente información:
+
+| Pregunta | Respuesta     |
+| :-------- | :------- | 
+| `√ Project folder:` | `quasar-django ` | 
+| `√ Pick Quasar version:` | `Quasar v2 (Vue 3 - latest and greatest):` | 
+| `√ Pick script type:` | `Javascript` | 
+| `√ Pick Quasar App CLI variant:` | ` Quasar App CLI with Vite` | 
+| `√ Package name:` | ` quasar-django` | 
+| `√ Project product name:` | `Task App` | 
+| `√ Project description:` | `Conexión backend django con frontend Quasar` | 
+| `√ Author:` | `BricoBC <barajas.c.bruno.n@gmail.com>` | 
+| `√ Pick your CSS preprocessor:` | `Sass with SCSS syntax` | 
+| `√ Check the features needed for your project:` | `ESLint, Axios, Vuex` | 
+| `√ Pick an ESLint preset:` | `Prettier` | 
+| `√ Install project dependencies?` | `Yes, use npm` | 
+
+Ya lo único que queda es acceder a la carpeta que se crea y ejecutar el servidor de Quasar:
+```js
+quasar dev
 ```
