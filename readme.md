@@ -300,6 +300,7 @@ En el de script hay que poner lo siguiente:
 ```js
 <script>
 import { defineComponent } from 'vue'
+import { api } from "boot/axios";
 
 export default defineComponent({
   name: 'IndexPage',
@@ -335,17 +336,27 @@ export default defineComponent({
     this.getRows()
   },
   methods:{
-    getRows(){
-        this.$axios
-        .get('http://127.0.0.1:8000/tasks/api/v1/task/')
-        .then(res =>{ this.rows = res.data })
-        .catch( e=>{ console.log(e)})
-    }
+   getRows() {
+      //api ya tiene el resto del url
+      api
+        .get("/task/")
+        .then((res) => {
+          this.rows = res.data;
+          console.log(this.rows);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
 })
 </script>
 ```
+Después en el archivo axios.js que se encuetra en la carpeta boot hay que poner lo  siguiente:
 
+```js
+const api = axios.create({ baseURL: 'http://127.0.0.1:8000/tasks/api/v1' })
+```
 Ahora tenemos que ver el puerto que se ejecuta el servidor de Quasar, en mi caso es el 9000 asi que lo voy a indicar en la configuración del proyecto de django.
 ```python
 ...
