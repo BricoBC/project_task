@@ -1,61 +1,76 @@
 <template>
-  <q-page class="flex flex-center">
+  
+  <!-- Table -->
+  <q-page class="">
     <div class="q-pa-md">
-    <q-table
-      flat bordered
-      title="Django-API"
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      :separator="separator"
-    />
-  </div>
+      <q-table
+        label="Agrega una descripción"
+        flat
+        bordered
+        title="Django-API"
+        :rows="rows"
+        :columns="columns"
+        row-key="name"
+      />
+    </div>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from "vue";
+import { api } from "boot/axios";
 
 export default defineComponent({
-  name: 'IndexPage',
-  data(){
+  name: "IndexPage",
+  data() {
     return {
-      columns:[
+      options: ["Crear", "Actualizar"],
+      input_option: ref("Crear"),
+      input_txtarea: ref(null),
+      input_text: ref(null),
+      action: "Crear",
+      columns: [
         {
-          name: 'titulo', //La vinculación a ese campo
-          label: 'Titulo', // Lo que se ve en la tabla
-          align: 'left', //La forma de cómo se alinea
-          field: 'title', //El campo del backend
-          sortable: true
+          name: "titulo", //La vinculación a ese campo
+          label: "Titulo", // Lo que se ve en la tabla
+          align: "left", //La forma de cómo se alinea
+          field: "title", //El campo del backend
+          sortable: true,
         },
         {
-          name: 'description',
-          label: 'Descripción',
-          align: 'left',
-          field: 'description',
-          sortable: true
+          name: "description",
+          label: "Descripción",
+          align: "left",
+          field: "description",
+          sortable: true,
         },
         {
-          name: 'done',
-          label: 'Hecho',
-          align: 'left',
-          field: 'done',
-          sortable: true
-        }, 
+          name: "done",
+          label: "Hecho",
+          align: "left",
+          field: "done",
+          sortable: true,
+        },
       ],
-      rows: [],  
-    }
+      rows: [],
+    };
   },
-  mounted(){
-    this.getRows()
+  mounted() {
+    this.getRows();
   },
-  methods:{
-    getRows(){
-        this.$axios
-        .get('http://127.0.0.1:8000/tasks/api/v1/task/')
-        .then(res =>{ this.rows = res.data })
-        .catch( e=>{ console.log(e)})
-    }
+  methods: {
+    getRows() {
+      //api ya tiene el resto del url
+      api
+        .get("/task/")
+        .then((res) => {
+          this.rows = res.data;
+          console.log(this.rows);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
-})
+});
 </script>
