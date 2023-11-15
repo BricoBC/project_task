@@ -1,5 +1,34 @@
 <template>
-  
+  <!-- Forms -->
+  <q-container class="q-pt-sm row no-wrap justify-around">
+    <q-select
+      style="min-width: 20%; max-width: 20%"
+      rounded
+      filled
+      v-model="input_option"
+      :options="options"
+      label="Elige una opción"
+    />
+    <q-input
+      style="min-width: 70%; max-width: 70%"
+      label="Agrega el titulo"
+      standout
+      v-model="input_text"
+    />
+  </q-container>
+  <q-container class="q-pt-sm row no-wrap justify-around">
+    <q-input
+      v-model="input_txtarea"
+      filled
+      autogrow
+      style="min-width: 85%; max-width: 85%"
+      />
+      <q-btn
+      style="min-width: 5%; max-width: 5%"
+      color="primary"
+      icon="mdi-plus"
+    />
+  </q-container>
   <!-- Table -->
   <q-page class="">
     <div class="q-pa-md">
